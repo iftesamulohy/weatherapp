@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Temperature Hot</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url(images/bg-image3.jpg) no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form class="col-md-6 m-auto py-5">
+            <div class="input-group mb-3">
+                <input id="city" type="text" class="form-control" placeholder="Enter a location for Weather ..." >
+                <div class="input-group-append">
+                    <button type="button" class="btn btn-success" id="searchButton">Search</button>
+                </div>
+            </div>
+        </form>
+        <div class="weather-status text-white text-center">
+            <img id="weatherImg" src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
+            <h1 id="Name">Dhaka</h1>
+            <h3><span id="temp">38.06</span>&deg;C</h3>
+            <h1 class="lead">Clouds</h1>
+        </div>
+    </div>
+ <script>
+     const Api_key = 'e506b61dcbe9b314f559c95a1023e423';
+     const buttonSearch = document.getElementById("searchButton");
+     buttonSearch.addEventListener("click",function(){
+        const city= document.getElementById("city").value;
+        weatherSearch(city);
+     })
+     function weatherSearch(city){
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${Api_key}`)
+     .then(res=>res.json())
+     .then(data=>{
+         const Name= data.name;
+         const temp = data.main.temp - 273;
+         const image = data.weather[0].icon;
+         document.getElementById("Name").innerHTML= Name;
+         document.getElementById("temp").innerHTML= temp.toFixed(2);
+         document.getElementById("weatherImg").src= `https://openweathermap.org/img/wn/${image}@2x.png`
+         
+     })
+     }
+     
+     
+    
+ </script>
+</body>
+
+</html>
